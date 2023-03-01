@@ -25,7 +25,43 @@ The behavior of [nginx] is to be considered as a general reference.
 
 ## Approach
 
+As a general approach, we decided to do a lot of testing with nginx to get a good overview of the required behavior.
+To make sure we followed the HTTP/1.1 standard, we followed the guidelines provided in the [HTTP/1.1 RFC].
+
+For input/output multiplexing, we decided to use `kqueue`. The downside of this is that our web server is only running on __macOS__.
+
+In terms of the [config file], we kept close to nginx. Supported options include:
+
+- set hostname
+- turn directory listing on or off
+- set an index file
+- allow specific HTTP methods
+- CGI setup
+- set maximum body size for requests
+- set custom error pages
+
+We chose to handle the methods `POST` and `DELETE` by CGI.
+
+## How to Use
+
+Clone this repository:
+```bash
+git clone https://github.com/hepple42/42-webserv.git
+```
+Change to the cloned directory. Then, build the project using `make`.
+Run the server with our default config file:
+```bash
+./build/webserv
+```
+Alternatively, specify a custom config file:
+```bash
+./build/webserv [config_file_path]
+```
+
 ## Basic Tests
+
+<details>
+  <summary>Some basic tests for evaluation.</summary>
 
 #### Hostname Resolving
 ```bash
@@ -61,9 +97,13 @@ siege -b -c10 -r1 http://localhost:80/empty
 siege -b -c10 -r1 http://localhost:80/test.py
 ```
 
+</details>
+
 
 [42 Heilbronn]: https://www.42heilbronn.de/learncoderepeat
 [tjensen42]: https://github.com/tjensen42
 [khirsig]: https://github.com/khirsig
 
 [nginx]: https://www.nginx.com/
+[HTTP/1.1 RFC]: https://www.rfc-editor.org/rfc/rfc2616
+[config file]: https://github.com/hepple42/42-webserv/blob/main/webserv.conf
