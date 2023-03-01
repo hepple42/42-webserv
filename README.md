@@ -48,7 +48,10 @@ Clone this repository:
 ```bash
 git clone https://github.com/hepple42/42-webserv.git
 ```
-Change to the cloned directory. Then, build the project using `make`.
+Change to the cloned directory and build the project:
+```bash
+cd 42-webserv && make
+```
 Run the server with our default config file:
 ```bash
 ./build/webserv
